@@ -1,10 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); // Importing express router
+const Subscriber = require("../models/subscriber"); // Importing the Subscriber model
 
 //Getting All
 router.get('/', async (req, res) => {
     try {
-        res.status(200).json({ message: "Get all subscribers" });
+        const subscribers = await Subscriber.find(); // Fetching all subscribers
+        res.json(subscribers); // Sending the list of subscribers as a response
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
