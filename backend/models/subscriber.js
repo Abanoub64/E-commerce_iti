@@ -2,10 +2,7 @@ const mongoose = require("mongoose"); // Importing mongoose library
 
 
 const subscriberSchema = new mongoose.Schema({
-id:{
-    type: Number,
-    required: true,
-},
+
 name:{
     type: String,
     required: true,

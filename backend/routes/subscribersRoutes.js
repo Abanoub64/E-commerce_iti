@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router(); // Importing express router
-const Subscriber = require("../models/subscriber"); // Importing the Subscriber model
+const Subscriber = require("../models/subscriberRoutes"); // Importing the Subscriber model
 
 //Getting All
 router.get("/", async (req, res) => {
