@@ -8,12 +8,6 @@ const userSchema = new Schema({
   password: String,
 });
 
-const products = new Schema({
-  productName: String,
-  title: String,
-  price: Number,
-  seller: String,
-  imgUrl: String,
-});
+
 
 module.exports = mongoose.Schema("User", userSchema);
