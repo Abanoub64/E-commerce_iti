@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router(); // Importing express router
 const product = require("../models/product");
+const productController = require("../controllers/productController");
 // Importing the model
 
 //Getting All
@@ -14,7 +15,7 @@ router.get("/products", async (req, res) => {
   }
 });
 //Getting One
-router.get("/:id", getproduct, async (req, res) => {
+router.get("/:id", productController.getproduct, async (req, res) => {
   res.json(res.product);
   try {
     res.status(200).json({ message: `Get product with ID ${req.params.id}` });
@@ -23,15 +24,24 @@ router.get("/:id", getproduct, async (req, res) => {
   }
 });
 //Creating One
-router.post("/", getproduct, async (req, res) => {
+router.post("/products", productController.getproduct, async (req, res) => {
+  const { name, price, seller } = req.body;
   try {
-    res.status(201).json({ message: "product created" });
+    const newProduct = await product.create({
+      name,
+      price,
+      seller,
+      description: "test1",
+      image: "test3",
+    });
+    res.send(newProduct);
+    // res.status(201).json({ message: `${newProduct}` });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 //Updating One
-router.patch("/:id", getproduct, async (req, res) => {
+router.post("/products/:id", productController.getproduct, async (req, res) => {
   if (req.body.name != null) {
     res.product.name = req.body.name;
   }
@@ -52,7 +62,7 @@ router.patch("/:id", getproduct, async (req, res) => {
   }
 });
 //Deleting One
-router.delete("/:id", getproduct, async (req, res) => {
+router.delete("/:id", productController.getproduct, async (req, res) => {
   try {
     await res.product.remove();
     res
@@ -62,18 +72,5 @@ router.delete("/:id", getproduct, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-async function getproduct(req, res, next) {
-  let product;
-  try {
-    const product = await product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "product not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-  res.product = product;
-}
 
 module.exports = router;
