@@ -16,4 +16,18 @@ content-type: application/json
   "name": "John Doe",
   "email": "john@gmail.com"
     "createdAt": "2023-10-01T12:00:00Z",
-    "seller": "Nasr"}
+    "seller": "Nasr"};
+
+
+###
+GET http://localhost:3000/products
+###
+POST http://localhost:3000/products
+
+{
+  "name": "Product Name",
+  
+  "price": 100,
+  "seller": "Seller Name",
+  
+}
