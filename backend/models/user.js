@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
   userName: { type: String, required: true },
   password: { type: String, required: true },
   userLevel: { type: String, default: "user" },
-  cart: { type: [String], default: [] },
+  cart: [{ type: mongoose.Schema.Types.ObjectId,
+  ref: "Order" }]
 });
 
 userSchema.pre("save", async function (next) {
