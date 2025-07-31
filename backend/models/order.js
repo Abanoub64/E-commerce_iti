@@ -21,7 +21,7 @@ const orderSchema = new mongoose.Schema({
     default: "Pending",
   },
   totalAmount: {
-    type: String,
+    type: Number,
     required: true,
   },
   image: {

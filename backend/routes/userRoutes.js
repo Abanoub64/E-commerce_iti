@@ -1,7 +1,7 @@
 // const { Router } = require("express");
 // const router = Router(); // Importing express router
 // const user = require("../models/user");
-// const userController = require("../controllers/userController");
+// const userController = require("../controllers/authController");
 // // Importing the model
 
 // //Getting All
@@ -39,12 +39,9 @@
 // });
 // //Updating One
 // router.put("/users/:id", userController.getuser, async (req, res) => {
-//   if (req.body.name != null) res.user.name = req.body.name;
-//   if (req.body.seller != null) res.user.seller = req.body.seller;
-//   if (req.body.price != null) res.user.price = req.body.price;
-//   if (req.body.description != null) res.user.description = req.body.description;
-//   if (req.body.image != null) res.user.image = req.body.image;
-
+//   if (req.body.userName != null) res.user.userName = req.body.userName;
+//   if (req.body.password != null) res.user.password = req.body.password;
+//   if (req.body.userLevel != null) res.user.userLevel = req.body.userLevel;
 //   try {
 //     const updateduser = await res.user.save();
 //     res.status(200).json({

@@ -33,14 +33,27 @@ router.post("/orders", async (req, res) => {
       productId,
       userId,
       totalAmount,
-      image
+      image,
     });
+// add this order to the cart of the user
+    const foundUser = await user.findById(userId);
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    res.status(201).json(newOrder);
+    foundUser.cart.push(newOrder._id);
+    await foundUser.save();
+
+    res.status(201).json({
+      message: "Order created and added to user cart",
+      order: newOrder,
+      userCart: foundUser.cart
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 //Updating One
 router.put("/orders/:id", orderController.getorder, async (req, res) => {
