@@ -1,19 +1,18 @@
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-const userSchema = new Schema({
-  userName: String,
-  userLevel: ["user" || "superuser"],
-  cart: [{ String }],
-  password: String,
+const userSchema = new mongoose.Schema({
+  userName: { type: String, required: true },
+  password: { type: String, required: true },
+  userLevel: { type: String, default: "user" },
+  cart: { type: [String], default: [] },
 });
 
-const products = new Schema({
-  productName: String,
-  title: String,
-  price: Number,
-  seller: String,
-  imgUrl: String,
+userSchema.pre("save", async function (next) {
+  console.log(`this user was created ${this}`);
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
-module.exports = mongoose.Schema("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
