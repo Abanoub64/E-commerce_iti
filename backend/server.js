@@ -4,6 +4,7 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
+const cors = require("cors");
 // Middleware
 app.use(express.json());
 
@@ -11,7 +12,11 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("E-commerce backend is running...");
 });
-
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(authRoutes);
 
 mongoose
