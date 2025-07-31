@@ -43,6 +43,8 @@ router.put("/products/:id", productController.getproduct, async (req, res) => {
   if (req.body.name != null) res.product.name = req.body.name;
   if (req.body.seller != null) res.product.seller = req.body.seller;
   if (req.body.price != null) res.product.price = req.body.price;
+  if (req.body.description != null) res.product.description = req.body.description;
+  if (req.body.image != null) res.product.image = req.body.image;
 
   try {
     const updatedProduct = await res.product.save();
