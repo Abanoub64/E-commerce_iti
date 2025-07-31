@@ -1,23 +1,27 @@
 require("dotenv").config();
 const express = require("express");
 const authRoutes = require("./routes/authRoutes");
+const productsRoutes = require("./routes/productRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 // Middleware
 app.use(express.json());
-
-// Basic Route
-app.get("/", (req, res) => {
-  res.send("E-commerce backend is running...");
-});
+app.use(cookieParser());
 app.use(
   cors({
     origin: "*",
   })
 );
 app.use(authRoutes);
+app.use(productsRoutes);
+
+// Basic Route
+// app.get("/", (req, res) => {
+//   res.send("E-commerce backend is running...");
+// });
 
 mongoose
   .connect(process.env.MONGO_URI, {})
@@ -29,4 +33,6 @@ mongoose
   })
   .catch((err) => console.error("MongoDB connection error ", err));
 
-// Start server
+app.get("/set-cookie", (req, res) => {
+  res.cookie("newUser", false, { maxAge: 1000 * 60 * 60 * 24 }, secure);
+});

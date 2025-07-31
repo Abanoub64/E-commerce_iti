@@ -1,27 +1,23 @@
 const mongoose = require("mongoose"); // Importing mongoose library
 
-
 const productSchema = new mongoose.Schema({
-
-name:{
+  name: {
     type: String,
     required: true,
-},
-Price:{
+  },
+  Price: {
     type: String,
     required: true,
-},
-desc: {
-    type: Date,
-    default: Date.now
-},
-seller:{
+  },
+  description: {
+    type: String,
+  },
+  seller: {
     type: String,
     required: true,
-},
-image:{
+  },
+  image: {
     type: String,
-}
-
-})
+  },
+});
 module.exports = mongoose.model("Product", productSchema); // Exporting the model
