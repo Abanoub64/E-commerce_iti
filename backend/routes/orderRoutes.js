@@ -26,18 +26,22 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 
 //Creating One
 router.post("/orders", async (req, res) => {
-  const { totalAmount } = req.body;
-  const productId = req.body.productId;
-  const userId = req.body.userId;
+  const { productId, userId, totalAmount, image } = req.body;
+
   try {
-    const neworder = await order.create({
-     totalAmount
+    const newOrder = await order.create({
+      productId,
+      userId,
+      totalAmount,
+      image
     });
-    res.send(neworder);
+
+    res.status(201).json(newOrder);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
+
 //Updating One
 router.put("/orders/:id", orderController.getorder, async (req, res) => {
   if (req.body.orderDate != null) res.order.orderDate = req.body.orderDate;
