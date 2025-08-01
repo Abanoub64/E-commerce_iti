@@ -1,31 +1,32 @@
-const mongoose = require("mongoose"); // Importing mongoose library
-
+const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-
-productId:{
-    type: String,
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
     required: true,
-},
-userId:{
-    type: String,
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
-},
-orderDate:{
+  },
+  orderDate: {
     type: Date,
-    default: Date.now
-},
-orderStatus: {
+    default: Date.now,
+  },
+  orderStatus: {
     type: String,
     required: true,
-},
-totalAmount:{
-    type: String,
+    default: "Pending",
+  },
+  totalAmount: {
+    type: Number,
     required: true,
-},
-image:{
+  },
+  image: {
     type: String,
-}
+  },
+});
 
-})
-module.exports = mongoose.model("Order", orderSchema); // Exporting the model
+module.exports = mongoose.model("Order", orderSchema);
