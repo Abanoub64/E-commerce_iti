@@ -17,6 +17,7 @@ productForm.onsubmit = async (e) => {
     description: document.getElementById("description").value,
     image: document.getElementById("image").value,
     price: document.getElementById("price").value,
+    stock: document.getElementById("Stock").value,
     seller: document.getElementById("seller").value,
   };
   await fetch("http://localhost:3000/products", {
