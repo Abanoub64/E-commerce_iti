@@ -6,7 +6,7 @@ module.exports.getorder = async (req, res, next) => {
   try {
     const getOrder = await order
       .findById(req.params.id)
-      .populate("productId")
+      .populate("products")
       .populate("userId");
 
     if (!getOrder) {
@@ -15,7 +15,7 @@ module.exports.getorder = async (req, res, next) => {
 
     res.json({
       orderId: getOrder._id,
-      productName: getOrder.productId.name,
+      productNames: getOrder.products.map((p) => p.name),
       userName: getOrder.userId.userName,
       totalAmount: getOrder.totalAmount,
     });
@@ -23,7 +23,6 @@ module.exports.getorder = async (req, res, next) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 
 //  <script>
 //     fetch("http://localhost:3000/api/orders")
@@ -34,11 +33,15 @@ module.exports.getorder = async (req, res, next) => {
 //         data.forEach(order => {
 //           const card = document.createElement("div");
 //           card.className = "card";
-//           card.innerHTML = `
-//             <h3>Product: ${order.productId?.name || "N/A"}</h3>
-//             <p>User: ${order.userId?.userName || "N/A"}</p>
-//             <p>Amount: ${order.totalAmount}</p>
-//           `;
+//         card.innerHTML = `
+//   <h3>Products:</h3>
+//   <ul>
+//     ${(order.productNames || []).map(name => `<li>${name}</li>`).join("")}
+//   </ul>
+//   <p>User: ${order.userName || "N/A"}</p>
+//   <p>Amount: ${order.totalAmount}</p>
+// `;
+
 //           container.appendChild(card);
 //         });
 //       })

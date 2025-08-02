@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  productId: {
+ products : [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
     required: true,
-  },
+  }],
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -24,9 +24,7 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  image: {
-    type: String,
-  },
+  
 });
 
 module.exports = mongoose.model("Order", orderSchema);
