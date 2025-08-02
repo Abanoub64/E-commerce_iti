@@ -1,0 +1,33 @@
+GET http://localhost:3000/subscribers
+
+###
+
+
+GET http://localhost:3000/subscribers/12
+
+
+###
+POST  http://localhost:3000/subscribers
+
+content-type: application/json
+
+{
+    "id": 12,
+  "name": "John Doe",
+  "email": "john@gmail.com"
+    "createdAt": "2023-10-01T12:00:00Z",
+    "seller": "Nasr"};
+
+
+###
+GET http://localhost:3000/products
+###
+POST http://localhost:3000/products
+
+{
+  "name": "Product Name",
+  
+  "price": 100,
+  "seller": "Seller Name",
+  
+}

@@ -26,22 +26,64 @@ C. APIs:
 
 
 
- products=[,{
+let products =[,{
     _id= String,
-    desc= ,
+    desc= String,
     img = url ,
     Price = Number,
     Title = String,
     Seller = String
  },,,,]
+ 
+//   Example ( you can use this data for the frontEnd)
+//
+//
+ products = [
+  {
+    _id: "1",
+    title: "Wireless Headphones",
+    description: "High quality sound with noise cancellation.",
+    img: "https://example.com/images/headphones.jpg",
+    price: 1200,
+    seller: "TechWorld"
+  },
+  {
+    _id: "2",
+    title: "Smart Watch",
+    description: "Waterproof fitness watch with heart rate monitor.",
+    img: "https://example.com/images/smartwatch.jpg",
+    price: 950,
+    seller: "GadgetZone"
+  },
+  {
+    _id: "3",
+    title: "Bluetooth Speaker",
+    description: "Portable speaker with deep bass.",
+    img: "https://example.com/images/speaker.jpg",
+    price: 500,
+    seller: "SoundHub"
+  },
+  {
+    _id: "4",
+    title: "Gaming Mouse",
+    description: "RGB mouse with high DPI and programmable buttons.",
+    img: "https://example.com/images/mouse.jpg",
+    price: 350,
+    seller: "ProGamer"
+  },
+  {
+    _id: "5",
+    title: "Laptop Stand",
+    description: "Adjustable aluminum laptop stand for better posture.",
+    img: "https://example.com/images/laptop-stand.jpg",
+    price: 250,
+    seller: "OfficeStuff"
+  }
+];
 
- [,{
-
- }]
 
 
  User=[,,{
-    _id= String,
     userName = String,
     Password = ##################,
     userLevel = [user, SuperUser],
