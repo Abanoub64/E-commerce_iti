@@ -102,6 +102,12 @@ router.delete("/orders/:id", orderController.getorder, async (req, res) => {
   }
 });
 
+//check user
+router.get("/users", async (req, res) => {
+  const users = await user.find();
+  res.json(users);
+});
+
 module.exports = router;
 
 // {
