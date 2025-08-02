@@ -1,22 +1,90 @@
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+// let userName = document.getElementById("UserName");
+// let passWord = document.getElementById("password");
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+// let login = async () => {
+//   let userReq = {
+//     userName: userName.value,
+//     password: passWord.value,
+//   };
 
-    if (email && password) {
-        alert("Login successful!");
-        // Here you can add further login logic or API calls
+//   try {
+//     let res = await fetch("http://localhost:3000/login", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(userReq),
+// credentials: "include",
+//     });
+
+//     let data = await res.json();
+//     console.log("✅ Response from backend:", data);
+//   } catch (error) {
+//     console.error("❌ Error:", error);
+//   }
+// };
+// let sendUser = async () => {
+//   let userReq = {
+//     userName: userName.value,
+//     password: passWord.value,
+//   };
+
+//   try {
+//     let res = await fetch("http://localhost:3000/signup", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(userReq),
+//       credentials: "include",
+//     });
+
+//     let data = await res.json();
+//     console.log("✅ Response from backend:", data);
+//   } catch (error) {
+//     console.error("❌ Error:", error);
+//   }
+// };
+let isLogin = true;
+
+function toggleForm() {
+  isLogin = !isLogin;
+
+  document.getElementById("form-title").textContent = isLogin
+    ? "Login"
+    : "Register";
+  document.getElementById("confirmPasswordDiv").style.display = isLogin
+    ? "none"
+    : "block";
+  document.getElementById("toggleText").textContent = isLogin
+    ? "Don't have an account?"
+    : "Already have an account?";
+  document.querySelector(".toggle-btn").textContent = isLogin
+    ? "Register"
+    : "Login";
+}
+
+document
+  .getElementById("authForm")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const userName = document.getElementById("userName");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+
+    let isValid = true;
+
+    if (userName.value.trim() === "") {
+      userName.classList.add("is-invalid");
+      isValid = false;
     } else {
-        alert("Please fill in both fields.");
+      userName.classList.remove("is-invalid");
     }
-});
 
-document.getElementById("shareAppLink").addEventListener("click", function () {
-    const appEmail = document.getElementById("appEmail").value;
-    if (appEmail) {
-        alert(`App link sent to email: ${appEmail}`);
-        // Here you can send the app download link via email
+    if (password.value.length < 6) {
+      password.classList.add("is-invalid");
+      isValid = false;
     } else {
       password.classList.remove("is-invalid");
     }
@@ -62,9 +130,9 @@ document.getElementById("shareAppLink").addEventListener("click", function () {
       }
 
       alert(`${isLogin ? "Login" : "Register"} successful`);
-      window.location.href = "../pages/product.html";
+      // window.location.href = "../pages/product.html";
     } catch (err) {
       console.error(err);
       alert("Network error");
     }
-});
+  });

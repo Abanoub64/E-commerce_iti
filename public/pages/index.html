@@ -1,89 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITI Store - Home</title>
-    <link rel="shortcut icon" href="../imgs/ITI LOGO.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/main.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login & Register</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="../imgs/ITI LOGO.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/login.css" />
 
-    <header class="navbar">
-        
-        <nav>
-            <ul>
-                <li><a href="../pages/index.html">Home</a></li>
-                <li><a href="../pages/cart.html">Cart</a></li>
-                
-            </ul>
-        </nav>
-        <div class="logo">
-           <h1> <a href="../pages/index.html"> <img src="../imgs/ITI LOGO.png" alt="ITI Store"> </a>STORE </h1> 
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .form-container {
+        max-width: 400px;
+        margin: 100px auto;
+      }
+      .toggle-btn {
+        cursor: pointer;
+        color: #0d6efd;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <h1>
+          <a href="../pages/index.html"
+            ><img class="iti1" src="../imgs/ITI LOGO.png" alt="ITI STORE"
+          /></a>
+          STORE
+        </h1>
+      </div>
+    </nav>
+    <div class="form-container card p-4 shadow">
+      <h2 id="form-title" class="text-center mb-4">Login</h2>
+
+      <form id="authForm" novalidate>
+        <div class="mb-3">
+          <label for="userName" class="form-label">User Name</label>
+          <input type="text" class="form-control" id="userName" required />
+          <div class="invalid-feedback">Please enter your name.</div>
         </div>
-        <div class="user-auth">
-            <a target="_blank" href="../pages/login.html">Sign In</a>
-            <a target="_blank" href="../admin/register.html">Sign Up</a>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            required
+            minlength="6"
+          />
+          <div class="invalid-feedback">
+            Password must be at least 6 characters.
+          </div>
         </div>
-    </header>
 
-
-    <section class="banner">
-        <img src="../imgs/iti paner.png" alt="Banner Image">
-    </section>
-
-    
-
-   
-    <section class="products">
-        <h2>Popular Products</h2>
-        <div class="product-list">
-            
-            <div class="product-item">
-                <img src="product1.jpg" alt="Product">
-                <p>Product Name</p>
-                <p>Price: 9999 EGP</p>
-                
-            </div>
-            <div class="product-item">
-                <img src="product2.jpg" alt="Product">
-                <p>Product Name</p>
-                <p>Price: 5999 EGP</p>
-                
-            </div>
-            <div class="product-item">
-                <img src="product3.jpg" alt="Product">
-                <p>Product Name</p>
-                <p>Price: 3499 EGP</p>
-               
-            </div>
-            
+        <div class="mb-3" id="confirmPasswordDiv" style="display: none">
+          <label for="confirmPassword" class="form-label"
+            >Confirm Password</label
+          >
+          <input type="password" class="form-control" id="confirmPassword" />
+          <div class="invalid-feedback">Passwords do not match.</div>
         </div>
-    </section>
 
-    <!-- App Download Section -->
-    <section class="app-download">
-        <h3>Get The Store App</h3>
-        <br>
-        <p>We will send you a link, open it on your phone to download the app :</p>
-        <br>
-        <input type="email" id="appEmail" placeholder="Enter your email">
-        <br>
-        <button id="shareAppLink">Share App Link</button>
-    </section>
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+      </form>
 
-    <footer>
-        <div class="payment-partners">
-            <img class="pay" src="../imgs/amazon pay.png" alt="Amazon Pay">
-            <img class="pay" src="../imgs/paypal.png" alt="PayPal">
-        </div>
-        <div class="app-links">
-            <a href="#"> <img class="app" src="../imgs/app store.png" alt=""></a>
-            
-             <a href="#"> <img class="app" src="../imgs/play store.png" alt=""></a>
-        </div>
-    </footer>
+      <p class="text-center mt-3">
+        <span id="toggleText">Don't have an account?</span>
+        <span class="toggle-btn" onclick="toggleForm()">Register</span>
+      </p>
+    </div>
 
-    <script src="../js/main.js"></script>
-</body>
+    <script src="../js/login.js"></script>
+  </body>
 </html>
