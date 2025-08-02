@@ -26,7 +26,7 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 
 //Creating One
 router.post("/orders", async (req, res) => {
-  const { products, userId,orderStatus, totalAmount, image } = req.body;
+  const { products, userId,orderStatus, totalAmount,  } = req.body;
 
   try {
     const newOrder = await order.create({
@@ -34,7 +34,7 @@ router.post("/orders", async (req, res) => {
       userId,
       orderStatus,
       totalAmount,
-      image,
+      
     });
     // add this order to the cart of the user
     const foundUser = await user.findById(userId);
