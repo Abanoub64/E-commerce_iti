@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>ITI Store - Register</title>
+    <link rel="shortcut icon" href="../imgs/ITI LOGO.png" type="image/x-icon">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1><a href="../pages/index.html"> <img class="iti1" src="../imgs/ITI LOGO.png" alt="ITI STORE"></a> STORE</h1>
+        </div>
+      
+        <div class="auth-links">
+            <a href="../pages/login.html" class="login-btn">Login</a>
+            <a href="./register.html" class="register-btn">Register</a>
+        </div>
+    </nav>
+    <div class="container">
+       
+        <section class="register-form">
+            <h2>Register Now:</h2>
+            <form id="registerForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="rePassword">Confirm Password:</label>
+                <input type="password" id="rePassword" name="rePassword" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" required>
+
+                <button type="submit">Register</button>
+            </form>
+        </section>
+
+        <section class="app-download">
+            <h3>Get the <img class="iti" src="../imgs/ITI LOGO.png"  alt=""> STORE app</h3>
+            <p>We will send you a link, open it on your phone to download the app.</p>
+            <input type="email" id="appEmail" placeholder="Your email ..">
+            <button id="shareAppLink">Share App Link</button>
+
+            <div class="payment-partners">
+                <img class="pay" src="../imgs/amazon pay.png" alt="Amazon Pay">
+                <img class="pay" src="../imgs/paypal.png" alt="PayPal">
+            </div>
+
+           
+        </section>
+    </div>
+
+    <script src="../admin/js/register.js"></script>
+</body>
+</html>

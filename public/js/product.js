@@ -1,92 +1,141 @@
-const productContainer = document.getElementById("productContainer");
-const searchInput = document.getElementById("searchInput");
-let products = [];
-let cart = [];
+var productName = document.getElementById("productName");
+var productPrice = document.getElementById("productPrice");
+var productCategory = document.getElementById("productCategory");
+var productDescription = document.getElementById("productDescription");
+var count = document.getElementById("count");
 
-async function fetchProducts() {
-  const res = await fetch("http://localhost:3000/products");
-  products = await res.json();
-  displayProducts(products);
+var productContainer = [];
+
+//localStorage
+if(localStorage.getItem("Our Product") == null){
+  productContainer = [];
+}
+else{
+  productContainer = JSON.parse(localStorage.getItem("Our Product"));
+  displayProduct();
+}
+function addProduct(){
+  var product = {
+    count: count.value,
+    name: productName.value ,
+    price: productPrice.value,
+    category: productCategory.value,
+    description: productDescription.value
+   
+   }
+
+   productContainer.push(product);
+   localStorage.setItem("Our Product", JSON.stringify(productContainer));
+   displayProduct();
+   clearInput()
 }
 
-function displayProducts(list) {
-  productContainer.innerHTML = "";
-  list.forEach((product) => {
-    const col = document.createElement("div");
-    col.className = "col-md-4";
-    col.innerHTML = `
-            <div class="card h-100">
-              <img src="${product.image}" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title">${product.name}</h5>
-                <p class="card-text">${product.description}</p>
-                <p class="fw-bold">${product.price} EGP</p>
-                <button class="btn btn-success" onclick='addToCart(${JSON.stringify(
-                  product
-                )})'>Add to Cart</button>
-              </div>
-            </div>
-          `;
-    productContainer.appendChild(col);
-  });
+function displayProduct() {
+  var productBox = "";
+  for(var i = 0; i < productContainer.length; i++){
+    productBox += `
+    <tr>
+        <td>${i+1}</td>
+        <td>${productContainer[i].count}</td>
+        <td>${productContainer[i].name}</td>
+        <td>${productContainer[i].price}</td>
+        <td>${productContainer[i].category}</td>
+        <td>${productContainer[i].description}</td>
+        
+        <td><button  class="btn btn-success" onclick="editRow(${i})">Edit</button></td>
+        <td><button onclick="deleteRow(${i})" class="btn btn-danger">Delete</button></td>
+    </tr>
+    `
+} 
+  document.getElementById("tBody").innerHTML =productBox;
+
+}
+// clear input
+function clearInput(){
+     count.value = "";
+     productName.value = "";
+     productPrice.value = "";
+     productCategory.value = "";
+     productDescription.value = "";
 }
 
-function addToCart(product) {
-  cart.push(product);
-  alert("Added to cart ✅");
-}
-
-function viewCart() {
-  const cartItems = document.getElementById("cartItems");
-  if (cart.length === 0) {
-    cartItems.innerHTML = `<p>No items in the cart.</p>`;
-  } else {
-    cartItems.innerHTML = cart
-      .map(
-        (item, i) => `
-              <div class="d-flex justify-content-between border-bottom py-2">
-                <div>
-                  <strong>${item.name}</strong><br />
-                  ${item.price} EGP
-                </div>
-                <button class="btn btn-sm btn-danger" onclick="removeFromCart(${i})">Remove</button>
-              </div>
-            `
-      )
-      .join("");
+  // delete all
+  function deleteAll(){
+    alert("Are you sure you want to delete all Product?");
+    productContainer.splice(0);
+    localStorage.setItem("Our Product", JSON.stringify(productContainer));
+    displayProduct()
   }
-  new bootstrap.Modal(document.getElementById("cartModal")).show();
+
+  //delete row
+  function deleteRow(i){
+ 
+    productContainer.splice(i,1);
+    localStorage.setItem("Our Product", JSON.stringify(productContainer));
+    displayProduct();
+  }
+
+  //search
+function searchProduct(term){
+  var productBox = "";
+  for(var i = 0; i < productContainer.length; i++){
+    if(productContainer[i].name.includes(term.trim()) == true ){
+      productBox +=
+      `
+    <tr>
+        <td>${i+1}</td>
+        <td>${productContainer[i].count}</td>
+        <td>${productContainer[i].name}</td>
+        <td>${productContainer[i].price}</td>
+        <td>${productContainer[i].category}</td>
+        <td>${productContainer[i].description}</td>
+        
+        <td><button  class="btn btn-success">Edit</button></td>
+        <td><button onclick="deleteRow(${i})" class="btn btn-danger">Delete</button></td>
+    </tr>
+    `
+    }
+  //alert(term);
+}
+  document.getElementById("tBody").innerHTML =productBox;
 }
 
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  viewCart();
+
+
+
+// edit row
+function editRow(i){
+ 
+  productContainer.splice(i,1);
+  
+  displayProduct();
 }
 
-searchInput.addEventListener("input", () => {
-  const filtered = products.filter((p) =>
-    p.name.toLowerCase().includes(searchInput.value.toLowerCase())
-  );
-  displayProducts(filtered);
-});
 
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await fetch("http://localhost:3000/logout", {
-    method: "GET",
-    credentials: "include",
+
+
+
+
+
+
+
+
+/* 
+const inputs = document.querySelectorAll("input");
+const addButton = document.getElementById("addButton");
+
+function checkInputs(){
+  let allFilled = false;
+
+  inputs.forEach(inputs => {
+    if(input.value.trim() !== ""){
+      allFilled = true;
+    }
   });
+  addButton.disabled = !allFilled;
+}
 
-  window.location.href = "../pages/login.html";
+inputs.forEach(input => {
+  input.addEventListener("input", checkInputs);
 });
-
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(";").shift();
-}
-
-const userLevel = getCookie("userLevel");
-if (userLevel === "superuser") {
-  document.getElementById("adminBtn").classList.remove("d-none");
-}
-fetchProducts();
+  */

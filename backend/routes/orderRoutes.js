@@ -26,12 +26,13 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 
 //Creating One
 router.post("/orders", async (req, res) => {
-  const { productId, userId, totalAmount, image } = req.body;
+  const { productId, userId,orderStatus, totalAmount, image } = req.body;
 
   try {
     const newOrder = await order.create({
       productId,
       userId,
+      orderStatus,
       totalAmount,
       image,
     });

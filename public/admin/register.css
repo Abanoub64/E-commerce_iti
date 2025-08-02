@@ -1,0 +1,194 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .logo img {
+    width: 50px;
+    
+}
+
+.navbar .nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.navbar .nav-links li {
+    margin-right: 20px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.navbar .auth-links a {
+    text-decoration: none;
+    color: #28a745;
+    font-size: 16px;
+    margin-left: 15px;
+    padding: 8px 15px;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar .auth-links .login-btn:hover,
+.navbar .auth-links .register-btn:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.navbar .auth-links .register-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+}
+
+.navbar .auth-links .register-btn:hover {
+    background-color: #218838;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.iti {
+    width: 30px;
+}
+.register-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.register-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.register-form button:hover {
+    background-color: #218838;
+}
+
+.app-download {
+    margin-top: 40px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-download h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.app-download p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.app-download input {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 50%;
+    
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.app-download button {
+    width: 50%;
+    
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.app-download button:hover {
+    background-color: #0056b3;
+}
+
+.payment-partners img {
+    width: 80px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.app-links a {
+    margin-right: 20px;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+}
+
+.app-links a:hover {
+    color: #007bff;
+}
+

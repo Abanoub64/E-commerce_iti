@@ -1,0 +1,38 @@
+.category-box {
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.category-box:hover {
+  background-color: #e2e2e2;
+}
+
+.product-card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 15px;
+  background-color: #fff;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+footer {
+  background: #f8f8f8;
+  padding: 30px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.banner img {
+  width: 100%;
+  border-radius: 10px;
+}

@@ -1,0 +1,44 @@
+h1 {
+    margin-top: 50px;
+    
+}
+
+p {
+    margin-top: 15px;
+}
+
+button {
+    margin-top: 20px;
+}
+
+.container .row .hi {
+    margin-top: 50px;
+}
+
+.container .row label {
+    margin: 10px 0px;
+}
+
+.container .searchtap {
+    margin-top: 20px;
+    width: 500px;
+    margin-left: 400px;
+    text-align: center;
+}
+
+.container .searchbtn {
+    margin-left: 610px;
+}
+
+@media screen and (max-width: 800px) {
+    .container .searchtap {
+        margin-left: 0px;
+    
+}
+}
+@media screen and (max-width: 800px) {
+    .container .searchbtn {
+        margin-left: 210px;
+    
+}
+}
