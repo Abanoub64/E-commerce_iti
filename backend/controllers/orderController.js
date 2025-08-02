@@ -13,16 +13,13 @@ module.exports.getorder = async (req, res, next) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    res.json({
-      orderId: getOrder._id,
-      productNames: getOrder.products.map((p) => p.name),
-      userName: getOrder.userId.userName,
-      totalAmount: getOrder.totalAmount,
-    });
+    res.order = getOrder; 
+    next(); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 //  <script>
 //     fetch("http://localhost:3000/api/orders")
