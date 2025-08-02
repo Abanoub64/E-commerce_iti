@@ -52,8 +52,9 @@ router.post("/orders", async (req, res) => {
       userCart: foundUser.cart,
     });
   } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+  console.error("Error while creating order:", error);
+  res.status(400).json({ message: error.message });
+}
 });
 
 // Confirming the order
