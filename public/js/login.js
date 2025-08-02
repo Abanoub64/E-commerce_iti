@@ -130,8 +130,7 @@ document
       }
 
       alert(`${isLogin ? "Login" : "Register"} successful`);
-      // يمكنك تحويل المستخدم لصفحة أخرى
-      // window.location.href = "/dashboard.html";
+      window.location.href = "../pages/product.html";
     } catch (err) {
       console.error(err);
       alert("Network error");

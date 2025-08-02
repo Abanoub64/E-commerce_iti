@@ -71,7 +71,7 @@ module.exports.login_post = async (req, res) => {
       sameSite: "Lax",
     });
 
-    res.cookie("userLevel", "user", {
+    res.cookie("userLevel", user.userLevel, {
       httpOnly: false,
       maxAge: maxAge * 1000,
       secure: false,
