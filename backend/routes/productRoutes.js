@@ -24,14 +24,15 @@ router.get("/products/:id", productController.getproduct, async (req, res) => {
 
 //Creating One
 router.post("/products", async (req, res) => {
-  const { name, price, seller } = req.body;
+  const { name, price, seller,description,image,stock } = req.body;
   try {
     const newProduct = await product.create({
       name,
       price,
       seller,
-      description: "test1",
-      image: "test3",
+      description,
+      image,
+      stock
     });
     res.send(newProduct);
   } catch (error) {
@@ -46,6 +47,7 @@ router.put("/products/:id", productController.getproduct, async (req, res) => {
   if (req.body.description != null)
     res.product.description = req.body.description;
   if (req.body.image != null) res.product.image = req.body.image;
+  if (req.body.stock != null) res.product.stock = req.body.stock;
 
   try {
     const updatedProduct = await res.product.save();

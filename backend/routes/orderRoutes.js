@@ -26,11 +26,11 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 
 //Creating One
 router.post("/orders", async (req, res) => {
-  const { productId, userId,orderStatus, totalAmount, image } = req.body;
+  const { products, userId,orderStatus, totalAmount, image } = req.body;
 
   try {
     const newOrder = await order.create({
-      productId,
+      products,
       userId,
       orderStatus,
       totalAmount,
@@ -100,3 +100,12 @@ router.delete("/orders/:id", orderController.getorder, async (req, res) => {
 });
 
 module.exports = router;
+
+// {
+//     "products": ["688c013ef3db1aac6f8c61f4" , "688c013ef3db1aac6f8c61f4"],
+//     "userId": "688afa0ce5ca1a2b0b02d077",
+//         "orderStatus": "Confirmed",
+//         "totalAmount": 5,
+//         "image": "test image",
+//         "orderDate": "2025-07-31T23:50:22.900Z"
+// }
