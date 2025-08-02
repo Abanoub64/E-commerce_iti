@@ -35,7 +35,7 @@ router.post("/orders", async (req, res) => {
       totalAmount,
       image,
     });
-// add this order to the cart of the user
+    // add this order to the cart of the user
     const foundUser = await user.findById(userId);
     if (!foundUser) {
       return res.status(404).json({ message: "User not found" });
@@ -47,19 +47,34 @@ router.post("/orders", async (req, res) => {
     res.status(201).json({
       message: "Order created and added to user cart",
       order: newOrder,
-      userCart: foundUser.cart
+      userCart: foundUser.cart,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-
+// Confirming the order
+router.patch("/orders/:id", async (req, res) => {
+  try {
+    const updated = await order.findByIdAndUpdate(req.params.id, {
+      orderStatus: req.body.orderStatus,
+    });
+    res.status(200).json(updated);
+  } catch (err) {
+    console.error("Error while updating order:", err);
+    res
+      .status(500)
+      .json({ error: "Error updating order", details: err.message });
+  }
+});
 //Updating One
 router.put("/orders/:id", orderController.getorder, async (req, res) => {
   if (req.body.orderDate != null) res.order.orderDate = req.body.orderDate;
-  if (req.body.orderStatus != null) res.order.orderStatus = req.body.orderStatus;
-  if (req.body.totalAmount != null) res.order.totalAmount = req.body.totalAmount;
+  if (req.body.orderStatus != null)
+    res.order.orderStatus = req.body.orderStatus;
+  if (req.body.totalAmount != null)
+    res.order.totalAmount = req.body.totalAmount;
   if (req.body.image != null) res.order.image = req.body.image;
 
   try {
@@ -76,7 +91,7 @@ router.put("/orders/:id", orderController.getorder, async (req, res) => {
 //Deleting One
 router.delete("/orders/:id", orderController.getorder, async (req, res) => {
   try {
-    await res.order.deleteOne(); 
+    await res.order.deleteOne();
     res.status(200).json({ message: `order with ID ${req.params.id} deleted` });
   } catch (error) {
     res.status(500).json({ message: error.message });

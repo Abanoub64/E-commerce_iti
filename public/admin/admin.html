@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <a class="navbar-brand" href="#">Admin</a>
+      <ul class="navbar-nav ms-3">
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showSection('products')"
+            >Products</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showSection('users')">Users</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="showSection('orders')"
+            >Orders</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container mt-4">
+      <!-- Products Section -->
+      <div id="products" class="section active">
+        <h3>Products</h3>
+        <form id="addProductForm" class="row g-3 mb-3">
+          <input
+            type="text"
+            id="title"
+            placeholder="Title"
+            class="form-control"
+            required
+          />
+          <input
+            type="text"
+            id="description"
+            placeholder="Description"
+            class="form-control"
+          />
+          <input
+            type="text"
+            id="image"
+            placeholder="Image URL"
+            class="form-control"
+          />
+          <input
+            type="number"
+            id="price"
+            placeholder="Price"
+            class="form-control"
+            required
+          />
+          <input
+            type="text"
+            id="seller"
+            placeholder="Seller"
+            class="form-control"
+            required
+          />
+          <button class="btn btn-primary">Add Product</button>
+        </form>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Seller</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </div>
+
+      <!-- Users Section -->
+      <div id="users" class="section">
+        <h3>Users</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Total Spent</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable"></tbody>
+        </table>
+      </div>
+
+      <!-- Order section -->
+      <div id="orders" class="section">
+        <h3>Orders</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Product</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="./js/admin.js"></script>
+  </body>
+</html>

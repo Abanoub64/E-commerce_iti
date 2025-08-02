@@ -43,7 +43,8 @@ router.put("/products/:id", productController.getproduct, async (req, res) => {
   if (req.body.name != null) res.product.name = req.body.name;
   if (req.body.seller != null) res.product.seller = req.body.seller;
   if (req.body.price != null) res.product.price = req.body.price;
-  if (req.body.description != null) res.product.description = req.body.description;
+  if (req.body.description != null)
+    res.product.description = req.body.description;
   if (req.body.image != null) res.product.image = req.body.image;
 
   try {
@@ -58,12 +59,12 @@ router.put("/products/:id", productController.getproduct, async (req, res) => {
 });
 
 //Deleting One
-router.delete("/products/:id", productController.getproduct, async (req, res) => {
+router.delete("/products/:id", async (req, res) => {
   try {
-    await res.product.deleteOne(); 
-    res.status(200).json({ message: `Product with ID ${req.params.id} deleted` });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Product deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "Error deleting product" });
   }
 });
 

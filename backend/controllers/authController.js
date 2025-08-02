@@ -83,10 +83,28 @@ module.exports.login_post = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+module.exports.getAllUsers = async (req, res) => {
+  try {
+    const user = await User.find();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 module.exports.logout_get = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.cookie("userId", "", { maxAge: 1 });
   res.cookie("userLevel", "", { maxAge: 1 });
 
   res.status(200).json({ message: "Logged out successfully" });
+};
+
+module.exports.deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "Error deleting user" });
+  }
 };
