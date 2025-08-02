@@ -26,22 +26,23 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 
 //Creating One
 router.post("/orders", async (req, res) => {
-  const { productId, userId,orderStatus, totalAmount, image } = req.body;
-
-  try {
-    const newOrder = await order.create({
-      productId,
-      userId,
-      orderStatus,
-      totalAmount,
-      image,
-    });
-    // add this order to the cart of the user
+  const { products, userId,orderStatus, totalAmount  } = req.body;
+  
+ // add this order to the cart of the user
     const foundUser = await user.findById(userId);
     if (!foundUser) {
       return res.status(404).json({ message: "User not found" });
     }
 
+  try {
+    const newOrder = await order.create({
+      products,
+      userId,
+      orderStatus,
+      totalAmount
+      
+    });
+   
     foundUser.cart.push(newOrder._id);
     await foundUser.save();
 
@@ -51,8 +52,9 @@ router.post("/orders", async (req, res) => {
       userCart: foundUser.cart,
     });
   } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+  console.error("Error while creating order:", error);
+  res.status(400).json({ message: error.message });
+}
 });
 
 // Confirming the order
@@ -100,3 +102,12 @@ router.delete("/orders/:id", orderController.getorder, async (req, res) => {
 });
 
 module.exports = router;
+
+// {
+//     "products": ["688c013ef3db1aac6f8c61f4" , "688c013ef3db1aac6f8c61f4"],
+//     "userId": "688afa0ce5ca1a2b0b02d077",
+//         "orderStatus": "Confirmed",
+//         "totalAmount": 5,
+//         "image": "test image",
+//         "orderDate": "2025-07-31T23:50:22.900Z"
+// }
