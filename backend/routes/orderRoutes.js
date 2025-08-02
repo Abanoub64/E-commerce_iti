@@ -26,22 +26,23 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 
 //Creating One
 router.post("/orders", async (req, res) => {
-  const { products, userId,orderStatus, totalAmount,  } = req.body;
+  const { products, userId,orderStatus, totalAmount  } = req.body;
+  
+ // add this order to the cart of the user
+    const foundUser = await user.findById(userId);
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
   try {
     const newOrder = await order.create({
       products,
       userId,
       orderStatus,
-      totalAmount,
+      totalAmount
       
     });
-    // add this order to the cart of the user
-    const foundUser = await user.findById(userId);
-    if (!foundUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
+   
     foundUser.cart.push(newOrder._id);
     await foundUser.save();
 
