@@ -28,7 +28,7 @@ router.get("/orders/:id", orderController.getorder, async (req, res) => {
 router.post("/orders", async (req, res) => {
   const { products, userId,orderStatus, totalAmount  } = req.body;
   
- // add this order to the cart of the user
+ // check for user
     const foundUser = await user.findById(userId);
     if (!foundUser) {
       return res.status(404).json({ message: "User not found" });
@@ -43,6 +43,7 @@ router.post("/orders", async (req, res) => {
       
     });
    
+    //add this order to the cart of the user
     foundUser.cart.push(newOrder._id);
     await foundUser.save();
 
@@ -99,6 +100,12 @@ router.delete("/orders/:id", orderController.getorder, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+//check user
+router.get("/users", async (req, res) => {
+  const users = await user.find();
+  res.json(users);
 });
 
 module.exports = router;
