@@ -76,38 +76,41 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
       // Add to cart logic
-      document.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("add-to-cart") || e.target.closest(".add-to-cart")) {
-          const button = e.target.classList.contains("add-to-cart") ? e.target : e.target.closest(".add-to-cart");
-          const productId = button.getAttribute("data-id");
-          const userId = "688d9c5bf35ad4dee9fbeb04";
-          
-          // Button loading state
-          const originalContent = button.innerHTML;
-          button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Adding...';
-          button.disabled = true;
+     document.addEventListener("click", async (e) => {
+  const button = e.target.closest(".add-to-cart");
+  if (!button) return;
 
-          try {
-            const response = await fetch(
-              `http://localhost:3000/api/cart/${userId}`,
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ productId }),
-              }
-            );
+  const productId = button.dataset.id;
+  const userId = "688d9c5bf35ad4dee9fbeb04";
 
-            const data = await response.json();
-            
-            // Success feedback
-            button.innerHTML = '<i class="fas fa-check me-1"></i>Added!';
-            button.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
-            
-            setTimeout(() => {
-              button.innerHTML = originalContent;
-              button.style.background = 'var(--primary-gradient)';
-              button.disabled = false;
-            }, 2000);
+  const originalText = button.innerHTML;
+  button.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Adding...';
+  button.disabled = true;
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/cart/${userId}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId }),
+    });
+
+    if (!res.ok) throw new Error("Request failed");
+
+    button.innerHTML = '<i class="fas fa-check me-1"></i>Added!';
+    button.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+  } catch (err) {
+    console.error("Error:", err);
+    button.innerHTML = '<i class="fas fa-times me-1"></i>Error';
+    button.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+  }
+
+  setTimeout(() => {
+    button.innerHTML = originalText;
+    button.style.background = 'var(--primary-gradient)';
+    button.disabled = false;
+  }, 2000);
+});
+
             
             console.log("✔️ Product added to cart:", data);
           } catch (err) {
