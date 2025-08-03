@@ -1,4 +1,4 @@
-const productContainer = document.getElementById("productContainer");
+const productContainer = document.getElementById("ContainerRow");
 const searchInput = document.getElementById("searchInput");
 let products = [];
 let cart = [];
@@ -14,13 +14,15 @@ function displayProducts(list) {
   productContainer.innerHTML = "";
   list.forEach((product) => {
     const col = document.createElement("div");
-    col.className = "col-md-4";
+    col.className = "card border shadow col-md-4 h-100";
+    // col.style="margin:5px;";
     col.innerHTML = `
-            <div class="card h-100">
+     
               <img src="${product.image}" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
                 <p class="card-text">${product.description}</p>
+                <p class="card-text">${product.stock}</p>
                 <p class="fw-bold">${product.price} EGP</p>
                 <button class="btn btn-success" onclick='addToCart(${JSON.stringify(
                   product
