@@ -77,7 +77,7 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
     credentials: "include",
   });
 
-  window.location.href = "../pages/login.html";
+  window.location.href = "../index.html";
 });
 
 function getCookie(name) {
