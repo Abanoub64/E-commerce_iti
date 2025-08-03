@@ -130,7 +130,7 @@ document
       }
 
       alert(`${isLogin ? "Login" : "Register"} successful`);
-      // window.location.href = "../pages/product.html";
+      window.location.href = "../product.html";
     } catch (err) {
       console.error(err);
       alert("Network error");
