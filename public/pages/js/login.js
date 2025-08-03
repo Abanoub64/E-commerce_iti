@@ -47,6 +47,8 @@
 // };
 let isLogin = true;
 
+const apiUrl = "https://e-commerce-iti-wfr1.onrender.com/";
+
 function toggleForm() {
   isLogin = !isLogin;
 
@@ -110,17 +112,14 @@ document
     };
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/${isLogin ? "login" : "signup"}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${apiUrl}${isLogin ? "login" : "signup"}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        credentials: "include",
+      });
 
       const data = await response.json();
 

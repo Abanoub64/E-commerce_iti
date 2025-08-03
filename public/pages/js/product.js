@@ -2,9 +2,10 @@ const productContainer = document.getElementById("productContainer");
 const searchInput = document.getElementById("searchInput");
 let products = [];
 let cart = [];
+const apiUrl = "https://e-commerce-iti-wfr1.onrender.com/";
 
 async function fetchProducts() {
-  const res = await fetch("http://localhost:3000/products");
+  const res = await fetch(`${apiUrl}products`);
   products = await res.json();
   displayProducts(products);
 }
@@ -71,7 +72,7 @@ searchInput.addEventListener("input", () => {
 });
 
 document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await fetch("http://localhost:3000/logout", {
+  await fetch(`${apiUrl}logout`, {
     method: "GET",
     credentials: "include",
   });
