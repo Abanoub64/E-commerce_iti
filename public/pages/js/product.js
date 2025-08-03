@@ -17,19 +17,11 @@ function displayProducts(list) {
     col.className = "card border shadow col-md-4 h-100";
     // col.style="margin:5px;";
     col.innerHTML = `
-     
-              <img src="${product.image}" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title">${product.name}</h5>
-                <p class="card-text">${product.description}</p>
-                <p class="card-text">${product.stock}</p>
-                <p class="fw-bold">${product.price} EGP</p>
-                <button class="btn btn-success" onclick='addToCart(${JSON.stringify(
-                  product
-                )})'>Add to Cart</button>
-              </div>
-            </div>
-          `;
+  <img src="${product.image}" alt="${product.title}">
+  <p>${product.name || product.title}</p>
+  <p>Price: ${product.price} EGP</p>
+  <button class="add-to-cart" data-id="${product._id}">Add to Cart</button>
+`;
     productContainer.appendChild(col);
   });
 }
