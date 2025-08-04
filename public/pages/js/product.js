@@ -203,32 +203,27 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "../admin/admin.html"; // Replace with your admin page
   });
 
-  async function handleAddToCart(productId) {
+  async function handleAddToCart(productId, button) {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       alert("Please login first!");
-      window.location.href = "../index.html";
+      window.location.href = "index.html";
       return;
     }
 
-    const button = document.querySelector(
-      `button[onclick="handleAddToCart('${productId}')"]`
-    );
     const originalText = button.innerHTML;
 
+    // عرض حالة التحميل
     button.innerHTML =
       '<span class="spinner-border spinner-border-sm me-1"></span> Adding...';
     button.disabled = true;
 
     try {
-      // إرسال طلب إلى الخادم
       const response = await fetch(
         `https://e-commerce-iti-wfr1.onrender.com/cart/${userId}`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ productId }),
           credentials: "include",
         }
@@ -236,12 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!response.ok) throw new Error("Failed to add to cart");
 
-      // تحديث localStorage للسلة المحلية
-      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      const product = await getProductDetails(productId);
-      cart.push(product);
-      localStorage.setItem("cart", JSON.stringify(cart));
-
+      // تحديث واجهة المستخدم
       button.innerHTML = '<i class="bi bi-check-circle me-1"></i> Added!';
       button.classList.remove("btn-primary");
       button.classList.add("btn-success");
@@ -297,11 +287,13 @@ document.addEventListener("DOMContentLoaded", () => {
         productsSection.appendChild(col);
       });
 
-      // إضافة event listener واحدة لجميع الأزرار (Event Delegation)
-      document.getElementById("productList").addEventListener("click", (e) => {
-        if (e.target.classList.contains("productBtn")) {
-          const productId = e.target.closest(".card").dataset.id;
-          handleAddToCart(productId);
+     document.getElementById("productList").addEventListener("click", (e) => {
+  if (e.target.classList.contains("productBtn")) {
+    const button = e.target;
+    const productId = button.closest(".card").dataset.id;
+    handleAddToCart(productId, button); // نمرر الزر كمعامل
+  }
+});
         }
       });
     })
