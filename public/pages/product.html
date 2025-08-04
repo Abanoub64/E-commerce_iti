@@ -3,71 +3,146 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../imgs/ITI LOGO.png" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/main.css" />
-    <title>Products</title>
+    <title>ITI-Store</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
     <style>
-      .card-img-top {
-        height: 200px;
+      .card:hover {
+        transform: translateY(-5px);
+        background-color: rgb(237, 236, 236);
+      }
+      nav {
+        background-color: rgb(185, 181, 181);
+      }
+      .carousel-inner img {
+        height: 350px;
         object-fit: cover;
+      }
+      footer {
+        height: 100px;
+        background-color: rgb(223, 216, 216);
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+
+      div > i:hover {
+        transform: translateY(-5px);
+      }
+      footer div {
+        display: inline-block;
+        margin: 0 10px;
+      }
+      footer i:hover {
+        color: rgb(90, 90, 225);
+      }
+      .nasr {
+        margin-bottom: 10px;
+      }
+      .productTitle {
+        font-size: larger;
+        font-weight: bold;
+        margin-bottom: 10px;
       }
     </style>
   </head>
-  <body class="p-4">
-    <nav class="navbar d-flex justify-content-between mb-3">
-      <div class="logo">
-        <h1>
-          <a href=""
-            ><img class="iti1" src="./imgs/ITI LOGO.png" alt="ITI STORE"
-          /></a>
-          STORE
-        </h1>
+  <body>
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand">ITI-Store</a>
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn search btn-light" type="submit">Search</button>
+        </form>
       </div>
-      <button id="adminBtn" class="btn btn-primary d-none">
-        Admin Dashboard
-      </button>
-      <button id="logoutBtn" class="btn btn-danger">Logout</button>
-
-      <input
-        type="text"
-        class="form-control w-50"
-        id="searchInput"
-        placeholder="Search by product name..."
-      />
-      <button class="btn btn-primary ms-3" onclick="viewCart()">🛒 Cart</button>
     </nav>
-
-    <div id="productContainer" class="row g-4"></div>
-
-    <!-- Cart Modal -->
     <div
-      class="modal fade"
-      id="cartModal"
-      tabindex="-1"
-      aria-labelledby="cartModalLabel"
-      aria-hidden="true"
+      id="carouselExampleIndicators"
+      class="carousel slide"
+      data-bs-ride="carousel"
+      data-bs-interval="3000"
     >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Your Cart</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="cartItems"></div>
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div class="carousel-inner" style="margin-bottom: 10px">
+        <div class="carousel-item active">
+          <img src="./imgs/slider1.jpg" class="d-block w-100" alt="..." />
+        </div>
+        <div class="carousel-item">
+          <img src="./imgs/slider2.jpg" class="d-block w-100" alt="..." />
+        </div>
+        <div class="carousel-item">
+          <img src="./imgs/slider3.jpg" class="d-block w-100" alt="..." />
         </div>
       </div>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="./js/product.js" ;></script>
+    <div class="container mt-4">
+      <div class="row g-4" id="productList"></div>
+    </div>
+
+    <footer>
+      <h4>Contact us</h4>
+      <div><i class="bi bi-twitter"></i></div>
+      <div><i class="bi bi-facebook"></i></div>
+      <div><i class="bi bi-linkedin"></i></div>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/product.js"></script>
   </body>
 </html>

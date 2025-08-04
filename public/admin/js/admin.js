@@ -6,6 +6,8 @@ function showSection(id) {
   document.getElementById(id).classList.add("active");
 }
 
+const apiUrl = "https://e-commerce-iti-wfr1.onrender.com/";
+
 // === Products ===
 const productForm = document.getElementById("addProductForm");
 const productTable = document.getElementById("productsTable");
@@ -20,7 +22,7 @@ productForm.onsubmit = async (e) => {
     stock: document.getElementById("Stock").value,
     seller: document.getElementById("seller").value,
   };
-  await fetch("http://localhost:3000/products", {
+  await fetch(`${apiUrl}products`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newProduct),
@@ -30,7 +32,7 @@ productForm.onsubmit = async (e) => {
 };
 
 async function loadProducts() {
-  const res = await fetch("http://localhost:3000/products");
+  const res = await fetch(`${apiUrl}products`);
   const data = await res.json();
   productTable.innerHTML = "";
   data.forEach((prod) => {
@@ -46,7 +48,7 @@ async function loadProducts() {
 }
 
 async function deleteProduct(id) {
-  await fetch(`http://localhost:3000/products/${id}`, { method: "DELETE" });
+  await fetch(`${apiUrl}products/${id}`, { method: "DELETE" });
   loadProducts();
 }
 
@@ -54,7 +56,7 @@ async function deleteProduct(id) {
 const usersTable = document.getElementById("usersTable");
 
 async function loadUsers() {
-  const res = await fetch("http://localhost:3000/admin/users");
+  const res = await fetch(`${apiUrl}admin/users`);
   const data = await res.json();
   usersTable.innerHTML = "";
   data.forEach((user) => {
@@ -69,7 +71,7 @@ async function loadUsers() {
 }
 
 async function deleteUser(id) {
-  await fetch(`http://localhost:3000/users/${id}`, { method: "DELETE" });
+  await fetch(`${apiUrl}users/${id}`, { method: "DELETE" });
   loadUsers();
 }
 
@@ -77,7 +79,7 @@ async function deleteUser(id) {
 const ordersTable = document.getElementById("ordersTable");
 
 async function loadOrders() {
-  const res = await fetch("http://localhost:3000/orders");
+  const res = await fetch(`${apiUrl}orders`);
   const data = await res.json();
   ordersTable.innerHTML = "";
   data.forEach((order) => {
@@ -98,7 +100,7 @@ async function loadOrders() {
 }
 
 async function confirmOrder(id) {
-  await fetch(`http://localhost:3000/orders/${id}`, {
+  await fetch(`${apiUrl}orders/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ orderStatus: "Confirmed" }),
