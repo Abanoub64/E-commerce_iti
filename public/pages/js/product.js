@@ -210,7 +210,14 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "index.html";
       return;
     }
+    function showAlert(message, type) {
+      const alertDiv = document.createElement("div");
+      alertDiv.className = `alert alert-${type} position-fixed top-0 end-0 m-3`;
+      alertDiv.textContent = message;
+      document.body.appendChild(alertDiv);
 
+      setTimeout(() => alertDiv.remove(), 3000);
+    }
     const originalText = button.innerHTML;
 
     // عرض حالة التحميل
@@ -238,7 +245,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // عرض تنبيه
       showAlert("Product added to cart!", "success");
     } catch (error) {
-      console.error("Error:", error);
       button.innerHTML = '<i class="bi bi-x-circle me-1"></i> Error';
       button.classList.remove("btn-primary");
       button.classList.add("btn-danger");
