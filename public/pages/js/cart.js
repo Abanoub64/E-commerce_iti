@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const orderList = document.getElementById("orderList");
   const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-  // 📦 عرض محتويات الكارت
+  
   if (cart.length === 0) {
     cartList.innerHTML = "<p>No items in cart.</p>";
     checkoutBtn.style.display = "none";
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // 🛒 إرسال الأوردر
+  // POSTING the order
   checkoutBtn.addEventListener("click", async () => {
     const userId = localStorage.getItem("userId");
 
@@ -188,11 +188,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const userId = localStorage.getItem("userId");
 
-      if (!userId) {
-        alert("Please login first.");
-        window.location.href = "index.html";
-        return;
-      }
+      // if (!userId) {
+      //   alert("Please login first.");
+      //   window.location.href = "index.html";
+      //   return;
+      // }
 
       const response = await fetch("https://e-commerce-iti-wfr1.onrender.com/orders");
       const orders = await response.json();
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      
+
       const userOrders = orders.filter((order) => order.userId === userId);
 
       if (userOrders.length === 0) {
