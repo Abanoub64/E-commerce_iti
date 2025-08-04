@@ -1,108 +1,191 @@
-const userId = "688d9c5bf35ad4dee9fbeb04";
+// const userId = "688d9c5bf35ad4dee9fbeb04";
 
-const totalPriceSpan = document.querySelector(".total-price");
-const totalItemsSpan = document.querySelector(".total-items");
+// const totalPriceSpan = document.querySelector(".total-price");
+// const totalItemsSpan = document.querySelector(".total-items");
 
-let totalPrice = 0;
-let totalItems = 0;
+// let totalPrice = 0;
+// let totalItems = 0;
 
+// document.addEventListener("DOMContentLoaded", async () => {
+//   try {
+//     const userRes = await fetch(`http://localhost:3000/api/users/${userId}`);
+//     const userData = await userRes.json();
+
+//     const lastOrderId = userData.cart[userData.cart.length - 1];
+
+//     const orderRes = await fetch(
+//       `http://localhost:3000/api/orders/${lastOrderId}`
+//     );
+//     const order = await orderRes.json();
+
+//     const container = document.getElementById("cart-items");
+//     container.innerHTML = "";
+
+//     order.products.forEach((product) => {
+//       container.innerHTML += `
+//         <div class="cart-item" data-price="${product.price}">
+//           <p>${product.name}</p>
+//           <p class="item-price">${product.price}</p>
+//           <button class="decrease">-</button>
+//           <span class="quantity">1</span>
+//           <button class="increase">+</button>
+//           <button class="remove-item">Remove</button>
+//         </div>
+//       `;
+//     });
+
+//     initCartEvents();
+//     updateCart();
+//   } catch (error) {
+//     console.error("Error loading cart:", error);
+//   }
+// });
+
+// function updateCart() {
+//   totalPrice = 0;
+//   totalItems = 0;
+//   const cartItems = document.querySelectorAll(".cart-item");
+
+//   cartItems.forEach((item) => {
+//     const price = parseInt(item.getAttribute("data-price"));
+//     const quantity = parseInt(item.querySelector(".quantity").textContent);
+//     totalPrice += price * quantity;
+//     totalItems += quantity;
+//   });
+
+//   totalPriceSpan.textContent = totalPrice;
+//   totalItemsSpan.textContent = totalItems;
+// }
+
+// function initCartEvents() {
+//   const increaseButtons = document.querySelectorAll(".increase");
+//   const decreaseButtons = document.querySelectorAll(".decrease");
+//   const removeButtons = document.querySelectorAll(".remove-item");
+//   const quantitySpans = document.querySelectorAll(".quantity");
+
+//   increaseButtons.forEach((button, index) => {
+//     button.addEventListener("click", () => {
+//       let quantity = parseInt(quantitySpans[index].textContent);
+//       quantity++;
+//       quantitySpans[index].textContent = quantity;
+//       updateCart();
+//     });
+//   });
+
+//   decreaseButtons.forEach((button, index) => {
+//     button.addEventListener("click", () => {
+//       let quantity = parseInt(quantitySpans[index].textContent);
+//       if (quantity > 1) {
+//         quantity--;
+//         quantitySpans[index].textContent = quantity;
+//         updateCart();
+//       }
+//     });
+//   });
+
+//   removeButtons.forEach((button, index) => {
+//     button.addEventListener("click", () => {
+//       const cartItem = button.closest(".cart-item");
+//       cartItem.remove();
+//       updateCart();
+//     });
+//   });
+// }
+
+// document.getElementById("checkout-btn").addEventListener("click", async () => {
+//   try {
+//     const res = await fetch(`http://localhost:3000/api/checkout/${userId}`, {
+//       method: "POST",
+//     });
+
+//     const data = await res.json();
+//     alert("✔️ Checkout completed!");
+//     console.log(data);
+//   } catch (err) {
+//     console.error("❌ Checkout failed:", err);
+//     alert("Checkout failed.");
+//   }
+// });
+
+
+// cart.js
 document.addEventListener("DOMContentLoaded", async () => {
+  const cartList = document.getElementById("cartList");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+  if (cart.length === 0) {
+    cartList.innerHTML = "<p>No items in cart.</p>";
+    checkoutBtn.style.display = "none";
+    return;
+  }
+
   try {
-    const userRes = await fetch(`http://localhost:3000/api/users/${userId}`);
-    const userData = await userRes.json();
+    // Get all products from server (you can optimize this with backend filter if needed)
+    const res = await fetch("https://e-commerce-iti-wfr1.onrender.com/products");
+    const products = await res.json();
 
-    const lastOrderId = userData.cart[userData.cart.length - 1];
-
-    const orderRes = await fetch(
-      `http://localhost:3000/api/orders/${lastOrderId}`
+    const selectedProducts = products.filter((product) =>
+      cart.includes(product._id)
     );
-    const order = await orderRes.json();
 
-    const container = document.getElementById("cart-items");
-    container.innerHTML = "";
+    selectedProducts.forEach((product) => {
+      const col = document.createElement("div");
+      col.className = "col-md-4 mb-3";
 
-    order.products.forEach((product) => {
-      container.innerHTML += `
-        <div class="cart-item" data-price="${product.price}">
-          <p>${product.name}</p>
-          <p class="item-price">${product.price}</p>
-          <button class="decrease">-</button>
-          <span class="quantity">1</span>
-          <button class="increase">+</button>
-          <button class="remove-item">Remove</button>
+      col.innerHTML = `
+        <div class="card p-2 shadow">
+          <img src="${product.image}" style="width:100%; height:180px; object-fit:contain;" />
+          <h5 class="mt-2">${product.name}</h5>
+          <p><strong>$${product.price}</strong></p>
         </div>
       `;
+
+      cartList.appendChild(col);
     });
 
-    initCartEvents();
-    updateCart();
-  } catch (error) {
-    console.error("Error loading cart:", error);
-  }
-});
+    // 🛒 Checkout Handler
+    checkoutBtn.addEventListener("click", async () => {
+      const userId = localStorage.getItem("userId");
 
-function updateCart() {
-  totalPrice = 0;
-  totalItems = 0;
-  const cartItems = document.querySelectorAll(".cart-item");
+      if (!userId) {
+        alert("Please login first.");
+        window.location.href = "index.html";
+        return;
+      }
 
-  cartItems.forEach((item) => {
-    const price = parseInt(item.getAttribute("data-price"));
-    const quantity = parseInt(item.querySelector(".quantity").textContent);
-    totalPrice += price * quantity;
-    totalItems += quantity;
-  });
+      // Create order payload
+      const order = {
+        userId: userId,
+        products: cart, // array of product IDs
+        status: "pending",
+        createdAt: new Date().toISOString(),
+      };
 
-  totalPriceSpan.textContent = totalPrice;
-  totalItemsSpan.textContent = totalItems;
-}
+      // Send order to server
+      try {
+        const response = await fetch("https://e-commerce-iti-wfr1.onrender.com/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(order),
+        });
 
-function initCartEvents() {
-  const increaseButtons = document.querySelectorAll(".increase");
-  const decreaseButtons = document.querySelectorAll(".decrease");
-  const removeButtons = document.querySelectorAll(".remove-item");
-  const quantitySpans = document.querySelectorAll(".quantity");
-
-  increaseButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      let quantity = parseInt(quantitySpans[index].textContent);
-      quantity++;
-      quantitySpans[index].textContent = quantity;
-      updateCart();
-    });
-  });
-
-  decreaseButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      let quantity = parseInt(quantitySpans[index].textContent);
-      if (quantity > 1) {
-        quantity--;
-        quantitySpans[index].textContent = quantity;
-        updateCart();
+        if (response.ok) {
+          alert("Order placed successfully!");
+          localStorage.removeItem("cart"); // clear cart
+          window.location.href = "index.html"; // go to home
+        } else {
+          const errorData = await response.json();
+          console.error("Checkout error:", errorData);
+          alert("Failed to place order.");
+        }
+      } catch (error) {
+        console.error("Error sending order:", error);
       }
     });
-  });
-
-  removeButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      const cartItem = button.closest(".cart-item");
-      cartItem.remove();
-      updateCart();
-    });
-  });
-}
-
-document.getElementById("checkout-btn").addEventListener("click", async () => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/checkout/${userId}`, {
-      method: "POST",
-    });
-
-    const data = await res.json();
-    alert("✔️ Checkout completed!");
-    console.log(data);
-  } catch (err) {
-    console.error("❌ Checkout failed:", err);
-    alert("Checkout failed.");
+  } catch (error) {
+    console.error("Error loading cart products:", error);
   }
 });
