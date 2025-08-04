@@ -197,7 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch((err) => console.error("Logout error:", err));
   });
-
+let cartBt= document.getElementById('cart')
+cartBt.addEventListener("click", () => {
+    window.location.href = "../cart.html"; // Replace with your admin page
+  });
   // Admin button functionality
   adminBtn?.addEventListener("click", () => {
     window.location.href = "../admin/admin.html"; // Replace with your admin page
