@@ -200,14 +200,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Admin button functionality
   adminBtn?.addEventListener("click", () => {
-    window.location.href = ""; // Replace with your admin page
+    window.location.href = "../admin/admin.html"; // Replace with your admin page
   });
 
   async function handleAddToCart(productId) {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       alert("Please login first!");
-      window.location.href = "index.html";
+      window.location.href = "../index.html";
       return;
     }
 
@@ -277,24 +277,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const card = document.createElement("div");
         card.className = "card shadow border p-3 d-flex flex-column w-100";
+        card.dataset.id = product._id; // إضافة dataset.id للبطاقة
 
         card.innerHTML = `
-  <p class="productTitle"><strong>${product.name}</strong></p>
-  <img src="${
-    product.image
-  }" style="width: 100%; height: 200px; object-fit: contain;" alt="">
-  <p><strong>Price:</strong> $${product.price}</p>
-  <p>${product.description.slice(0, 100)}...</p>
-  <div class="mt-auto">
-    <button class="btn btn-sm btn-primary productBtn w-100" 
-            onclick="handleAddToCart('${product._id}')">
-      Add To Cart
-    </button>
-  </div>
-`;
+    <p class="productTitle"><strong>${product.name}</strong></p>
+    <img src="${
+      product.image
+    }" style="width: 100%; height: 200px; object-fit: contain;" alt="">
+    <p><strong>Price:</strong> $${product.price}</p>
+    <p>${product.description.slice(0, 100)}...</p>
+    <div class="mt-auto">
+      <button class="btn btn-sm btn-primary productBtn w-100">
+        Add To Cart
+      </button>
+    </div>
+  `;
 
         col.appendChild(card);
         productsSection.appendChild(col);
+      });
+
+      // إضافة event listener واحدة لجميع الأزرار (Event Delegation)
+      document.getElementById("productList").addEventListener("click", (e) => {
+        if (e.target.classList.contains("productBtn")) {
+          const productId = e.target.closest(".card").dataset.id;
+          handleAddToCart(productId);
+        }
       });
     })
     .catch((error) => console.error("Error fetching products:", error));
