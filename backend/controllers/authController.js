@@ -30,7 +30,6 @@ module.exports.signup_post = async (req, res) => {
       httpOnly: true,
       maxAge: maxAge * 1000,
       secure: false,
-      sameSite: "None",
       domain: "",
       path: "/",
     });
@@ -38,7 +37,6 @@ module.exports.signup_post = async (req, res) => {
       httpOnly: false,
       maxAge: maxAge * 1000,
       secure: false,
-      sameSite: "None",
       domain: "",
       path: "/",
     });
@@ -47,7 +45,6 @@ module.exports.signup_post = async (req, res) => {
       httpOnly: false,
       maxAge: maxAge * 1000,
       secure: false,
-      sameSite: "None",
       domain: "",
       path: "/",
     });
@@ -68,7 +65,6 @@ module.exports.login_post = async (req, res) => {
       httpOnly: true,
       maxAge: maxAge * 1000,
       secure: false,
-      sameSite: "None",
       domain: "",
       path: "/",
     });
@@ -76,7 +72,6 @@ module.exports.login_post = async (req, res) => {
       httpOnly: false,
       maxAge: maxAge * 1000,
       secure: false,
-      sameSite: "None",
       domain: "",
       path: "/",
     });
@@ -85,7 +80,6 @@ module.exports.login_post = async (req, res) => {
       httpOnly: false,
       maxAge: maxAge * 1000,
       secure: false,
-      sameSite: "None",
       domain: "",
       path: "/",
     });
