@@ -14,10 +14,14 @@
       .section.active {
         display: block;
       }
+      nav{
+        background-color: rgb(184, 179, 179);
+        
+      }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <nav class="navbar navbar-expand-lg   px-4">
       <a class="navbar-brand" href="#">Admin</a>
       <ul class="navbar-nav ms-3">
         <li class="nav-item">
@@ -32,14 +36,18 @@
           <a class="nav-link" href="#" onclick="showSection('orders')"
             >Orders</a
           >
+          <a class="nav-link btn btn-light" href="../index.html" style="margin-left: 20px;"
+            >back to home</a>
         </li>
       </ul>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container card shadow mt-4">
       <!-- Products Section -->
       <div id="products" class="section active">
-        <h3>Products</h3>
+        <h3 class="card-header text-center">Products</h3>
+        <div class="card-body">
+        <label for="title" >Title</label>
         <form id="addProductForm" class="row g-3 mb-3">
           <input
             type="text"
@@ -48,18 +56,21 @@
             class="form-control"
             required
           />
+          <label for="description">description</label>
           <input
             type="text"
             id="description"
             placeholder="Description"
             class="form-control"
           />
+          <label for="image" class="form-label">Image URL</label>
           <input
-            type="text"
+            type="file"
             id="image"
             placeholder="Image URL"
             class="form-control"
           />
+          <label for="price">Price</label>
           <input
             type="number"
             id="price"
@@ -67,6 +78,7 @@
             class="form-control"
             required
           />
+          <label for="seller">Seller</label>
           <input
             type="text"
             id="seller"
@@ -75,6 +87,7 @@
             required
           />
           <button class="btn btn-primary">Add Product</button>
+        </div>
         </form>
         <table class="table">
           <thead>
