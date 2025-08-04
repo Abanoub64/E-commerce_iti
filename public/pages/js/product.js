@@ -218,44 +218,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setTimeout(() => alertDiv.remove(), 3000);
     }
-    const originalText = button.innerHTML;
 
-    // عرض حالة التحميل
+    // Show loading state
     button.innerHTML =
       '<span class="spinner-border spinner-border-sm me-1"></span> Adding...';
     button.disabled = true;
 
     try {
-      // 1. الحصول على السلة الحالية من localStorage أو إنشاء سلة جديدة
-      let cart = JSON.parse(localStorage.getItem("cart") || []);
+      // 1. Get the current cart from localStorage or create a new one
+      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-      // 2. إضافة productId إلى السلة (حتى لو متكرر)
+      // 2. Add productId to the cart (even if duplicate)
       cart.push(productId);
 
-      // 3. حفظ السلة المحدثة في localStorage
+      // 3. Save the updated cart to localStorage
       localStorage.setItem("cart", JSON.stringify(cart));
 
-      // 4. إرسال الطلب إلى الخادم (اختياري)
+      // 4. Optionally, send the request to the server
 
-      // تحديث واجهة المستخدم
+      // Update UI
       button.innerHTML = '<i class="bi bi-check-circle me-1"></i> Added!';
       button.classList.remove("btn-primary");
       button.classList.add("btn-success");
 
-      // عرض تنبيه
+      // Show alert
       showAlert("Product added to cart!", "success");
     } catch (error) {
-      button.innerHTML = '<i class="bi bi-x-circle me-1"></i> Error';
-      button.classList.remove("btn-primary");
-      button.classList.add("btn-danger");
-      showAlert("Failed to add product", "danger");
-    } finally {
-      setTimeout(() => {
-        button.innerHTML = originalText;
-        button.disabled = false;
-        button.classList.remove("btn-success", "btn-danger");
-        button.classList.add("btn-primary");
-      }, 2000);
+      // Handle any errors
+      button.innerHTML = "Add To Cart";
+      button.classList.remove("btn-success");
+      button.classList.add("btn-primary");
+      button.disabled = false;
+      showAlert("Failed to add product to cart.", "danger");
+      console.error("Error in handleAddToCart:", error);
     }
   }
 
