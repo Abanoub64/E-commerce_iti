@@ -84,8 +84,8 @@ async function loadOrders() {
   data.forEach((order) => {
     ordersTable.innerHTML += `
       <tr>
-        <td>${order.userId?.userName || "User"}</td>
-        <td>${order.productId?.name || "Product"}</td>
+        <td>${order.userId || "User"}</td>
+        <td>${order.productId || "Product"}</td>
         <td>${order.orderStatus}</td>
         <td><button class="btn btn-success btn-sm" onclick="confirmOrder('${
           order._id
