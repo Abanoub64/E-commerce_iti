@@ -132,7 +132,7 @@ document
       localStorage.setItem("userLevel", data.userLevel);
 
       alert(`${isLogin ? "Login" : "Register"} successful`);
-      window.location.href = "../product.html";
+      window.location.href = "./product.html";
     } catch (err) {
       console.error(err);
       alert("Network error");
