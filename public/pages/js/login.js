@@ -119,7 +119,7 @@ document
         },
         body: JSON.stringify(payload),
         credentials: "include",
-      }).then((data) => console.log("Cookies:", data));
+      });
 
       const data = await response.json();
 
@@ -127,6 +127,9 @@ document
         alert(data.error || "Something went wrong");
         return;
       }
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userLevel", data.userLevel);
 
       alert(`${isLogin ? "Login" : "Register"} successful`);
       window.location.href = "../product.html";

@@ -48,7 +48,11 @@ module.exports.signup_post = async (req, res) => {
       domain: "",
       path: "/",
     });
-    res.status(201).json(user._id);
+    res.status(200).json({
+      userId: user._id,
+      userName: user.userName,
+      userLevel: user.userLevel,
+    });
     console.log(user);
   } catch (error) {
     console.log(error);
@@ -83,7 +87,11 @@ module.exports.login_post = async (req, res) => {
       domain: "",
       path: "/",
     });
-    res.status(200).json({ user: user._id });
+    res.status(200).json({
+      userId: user._id,
+      userName: user.userName,
+      userLevel: user.userLevel,
+    });
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ error: error.message });

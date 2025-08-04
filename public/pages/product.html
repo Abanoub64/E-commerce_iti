@@ -15,6 +15,19 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
     <style>
+      .navbar {
+        background-color: rgb(185, 181, 181);
+        padding: 10px 0;
+      }
+
+      #userGreeting {
+        font-weight: 500;
+        color: #333;
+      }
+
+      #logoutBtn {
+        margin-left: 10px;
+      }
       .card:hover {
         transform: translateY(-5px);
         background-color: rgb(237, 236, 236);
@@ -55,9 +68,19 @@
     </style>
   </head>
   <body>
-    <nav class="navbar">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <a class="navbar-brand">ITI-Store</a>
+
+        <!-- User greeting and admin button -->
+        <div class="d-flex align-items-center" id="userSection">
+          <span id="userGreeting" class="me-3 d-none"></span>
+          <button id="adminBtn" class="btn btn-outline-primary me-2 d-none">
+            Admin
+          </button>
+          <button id="logoutBtn" class="btn btn-outline-danger">Logout</button>
+        </div>
+
         <form class="d-flex" role="search">
           <input
             class="form-control me-2"
