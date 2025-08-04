@@ -189,3 +189,42 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error loading cart products:", error);
   }
 });
+
+//To display orders
+var order = document.getElementById("orders");
+
+order.addEventListener("click", async () => {
+  try {
+    const response = await fetch("https://e-commerce-iti-wfr1.onrender.com/orders", {
+      method: "GET",
+    });
+
+    const orders = await response.json();
+
+    const ordersContainer = document.getElementById("orderList");
+    ordersContainer.innerHTML = "";
+
+    if (orders.length === 0) {
+      ordersContainer.innerHTML = "<p>No orders found.</p>";
+      return;
+    }
+
+    orders.forEach((order) => {
+      const card = document.createElement("div");
+      card.className = "card p-3 my-2 shadow";
+
+      card.innerHTML = `
+        <h5>Order ID: ${order._id}</h5>
+        <p><strong>User ID:</strong> ${order.userId}</p>
+        <p><strong>Status:</strong> ${order.status}</p>
+        <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
+        <p><strong>Products:</strong></p>
+        <ul>${order.products.map(p => `<li>${p}</li>`).join("")}</ul>
+      `;
+
+      ordersContainer.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+  }
+});
