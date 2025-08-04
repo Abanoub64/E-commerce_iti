@@ -20,6 +20,7 @@ module.exports.getorder = async (req, res, next) => {
   }
 };
 //-----------------------------------------------------
+// هتحسب سعر الاوردر من هنا يا ابانوب
 const calculateTotalAmount = async (orderProducts) => {
   const products = await Product.find({ _id: { $in: orderProducts } });
   const total = products.reduce((sum, product) => sum + product.price, 0);
