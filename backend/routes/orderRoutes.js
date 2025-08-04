@@ -9,12 +9,18 @@ const orderController = require("../controllers/orderController");
 //Getting All
 router.get("/orders", async (req, res) => {
   try {
-    const orders = await order.find();
+    const orders = await Order.find()
+      .populate("userId", "userName") 
+      .populate("products", "name price image"); 
+
     res.json(orders);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 //Getting One
 router.get("/orders/:id", orderController.getorder, async (req, res) => {
   try {
