@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // 📋 عرض الطلبات لما المستخدم يضغط على Orders
+  // to Display orders!!
   orderBtn?.addEventListener("click", async () => {
     try {
       const userId = localStorage.getItem("userId");
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      // عرض الطلبات الخاصة فقط بالمستخدم الحالي
+      
       const userOrders = orders.filter((order) => order.userId === userId);
 
       if (userOrders.length === 0) {
