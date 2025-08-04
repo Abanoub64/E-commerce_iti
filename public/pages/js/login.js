@@ -119,7 +119,7 @@ document
         },
         body: JSON.stringify(payload),
         credentials: "include",
-      });
+      }).then((data) => console.log("Cookies:", data));
 
       const data = await response.json();
 
