@@ -53,6 +53,7 @@ function updateCart() {
     totalItems += quantity;
   });
 
+
   totalPriceSpan.textContent = totalPrice;
   totalItemsSpan.textContent = totalItems;
 }

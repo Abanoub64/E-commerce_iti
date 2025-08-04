@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('')  // حطو ال ا بي اييي يخواااااااااااااااتييييي
+    fetch('https://fakestoreapi.com/products')  // حطو ال ا بي اييي يخواااااااااااااااتييييي
         .then(response => response.json())
         .then(data => {
             const productsSection = document.querySelector('.product-list');
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const productItem = document.createElement('div');
                 productItem.classList.add('product-item');
                 productItem.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
+                    <img src="${product.image}" alt="${product.image}">
                     <p>${product.name}</p>
                     <p>Price: ${product.price} EGP</p>
                     

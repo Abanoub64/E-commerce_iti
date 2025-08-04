@@ -108,6 +108,10 @@ router.get("/users", async (req, res) => {
   res.json(users);
 });
 
+router.post("/cart/:userId", orderController.addToCart);
+
+router.post("/checkout/:userId", orderController.checkout);
+
 module.exports = router;
 
 // {

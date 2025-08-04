@@ -19,7 +19,6 @@ productForm.onsubmit = async (e) => {
     description: document.getElementById("description").value,
     image: document.getElementById("image").value,
     price: document.getElementById("price").value,
-    stock: document.getElementById("Stock").value,
     seller: document.getElementById("seller").value,
   };
   await fetch(`${apiUrl}products`, {
@@ -86,10 +85,7 @@ async function loadOrders() {
     ordersTable.innerHTML += `
       <tr>
         <td>${order.userId?.userName || "User"}</td>
-        <td>
-  ${order.products?.map((p) => p.name).join("<br>") || "No Products"}
-</td>
-
+        <td>${order.productId?.name || "Product"}</td>
         <td>${order.orderStatus}</td>
         <td><button class="btn btn-success btn-sm" onclick="confirmOrder('${
           order._id
