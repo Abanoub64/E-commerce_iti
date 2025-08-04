@@ -204,55 +204,53 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   async function handleAddToCart(productId, button) {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      alert("Please login first!");
-      window.location.href = "index.html";
-      return;
-    }
-
-    const originalText = button.innerHTML;
-
-    // عرض حالة التحميل
-    button.innerHTML =
-      '<span class="spinner-border spinner-border-sm me-1"></span> Adding...';
-    button.disabled = true;
-
-    try {
-      const response = await fetch(
-        `https://e-commerce-iti-wfr1.onrender.com/cart/${userId}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ productId }),
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) throw new Error("Failed to add to cart");
-
-      // تحديث واجهة المستخدم
-      button.innerHTML = '<i class="bi bi-check-circle me-1"></i> Added!';
-      button.classList.remove("btn-primary");
-      button.classList.add("btn-success");
-
-      // عرض تنبيه
-      showAlert("Product added to cart!", "success");
-    } catch (error) {
-      console.error("Error:", error);
-      button.innerHTML = '<i class="bi bi-x-circle me-1"></i> Error';
-      button.classList.remove("btn-primary");
-      button.classList.add("btn-danger");
-      showAlert("Failed to add product", "danger");
-    } finally {
-      setTimeout(() => {
-        button.innerHTML = originalText;
-        button.disabled = false;
-        button.classList.remove("btn-success", "btn-danger");
-        button.classList.add("btn-primary");
-      }, 2000);
-    }
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    alert("Please login first!");
+    window.location.href = "index.html";
+    return;
   }
+
+  const originalText = button.innerHTML;
+  
+  // عرض حالة التحميل
+  button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Adding...';
+  button.disabled = true;
+
+  try {
+    // 1. الحصول على السلة الحالية من localStorage أو إنشاء سلة جديدة
+    let cart = JSON.parse(localStorage.getItem("cart") || [];
+    
+    // 2. إضافة productId إلى السلة (حتى لو متكرر)
+    cart.push(productId);
+    
+    // 3. حفظ السلة المحدثة في localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+    
+    // 4. إرسال الطلب إلى الخادم (اختياري)
+   
+    // تحديث واجهة المستخدم
+    button.innerHTML = '<i class="bi bi-check-circle me-1"></i> Added!';
+    button.classList.remove("btn-primary");
+    button.classList.add("btn-success");
+    
+    // عرض تنبيه
+    showAlert("Product added to cart!", "success");
+  } catch (error) {
+    console.error("Error:", error);
+    button.innerHTML = '<i class="bi bi-x-circle me-1"></i> Error';
+    button.classList.remove("btn-primary");
+    button.classList.add("btn-danger");
+    showAlert("Failed to add product", "danger");
+  } finally {
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.disabled = false;
+      button.classList.remove("btn-success", "btn-danger");
+      button.classList.add("btn-primary");
+    }, 2000);
+  }
+}
 
   // Fetch and display products
   fetch("https://e-commerce-iti-wfr1.onrender.com/products")
