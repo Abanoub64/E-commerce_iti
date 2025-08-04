@@ -9,7 +9,7 @@ const orderController = require("../controllers/orderController");
 //Getting All
 router.get("/orders", async (req, res) => {
   try {
-    const orders = await Order.find()
+    const orders = await order.find()
       .populate("userId", "userName") 
       .populate("products", "name price image"); 
 
