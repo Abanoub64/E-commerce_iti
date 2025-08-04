@@ -287,13 +287,11 @@ document.addEventListener("DOMContentLoaded", () => {
         productsSection.appendChild(col);
       });
 
-     document.getElementById("productList").addEventListener("click", (e) => {
-  if (e.target.classList.contains("productBtn")) {
-    const button = e.target;
-    const productId = button.closest(".card").dataset.id;
-    handleAddToCart(productId, button); // نمرر الزر كمعامل
-  }
-});
+      document.getElementById("productList").addEventListener("click", (e) => {
+        if (e.target.classList.contains("productBtn")) {
+          const button = e.target;
+          const productId = button.closest(".card").dataset.id;
+          handleAddToCart(productId, button); // نمرر الزر كمعامل
         }
       });
     })
