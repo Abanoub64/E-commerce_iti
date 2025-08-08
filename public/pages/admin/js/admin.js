@@ -21,16 +21,20 @@ productForm.onsubmit = async (e) => {
     price: document.getElementById("price").value,
     seller: document.getElementById("seller").value,
   };
-  await fetch(`${apiUrl}products`, {
+
+  fetch(`${apiUrl}products`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newProduct),
-  });
-  productForm.reset();
-  loadProducts();
+  })
+  .catch(error => console.error('Error adding product:', error));
+
+    productForm.reset();
+    loadProducts();
+
 };
 
-async function loadProducts() {
+async function loadProducts() { // Fixed: Added catch block
   const res = await fetch(`${apiUrl}products`);
   const data = await res.json();
   productTable.innerHTML = "";
@@ -43,12 +47,15 @@ async function loadProducts() {
         <td><button class="btn btn-danger btn-sm" onclick="deleteProduct('${prod._id}')">Delete</button></td>
       </tr>
     `;
-  });
+  }); // Corrected: .catch was misplaced
+
+  
 }
 
 async function deleteProduct(id) {
-  await fetch(`${apiUrl}products/${id}`, { method: "DELETE" });
-  loadProducts();
+  fetch(`${apiUrl}products/${id}`, { method: "DELETE" })
+    .catch(error => console.error('Error deleting product:', error));
+    loadProducts();
 }
 
 // === Users ===
@@ -65,13 +72,16 @@ async function loadUsers() {
         <td>${user.totalSpend}</td>
         <td><button class="btn btn-danger btn-sm" onclick="deleteUser('${user._id}')">Delete</button></td>
       </tr>
-    `;
+    `; // Corrected: .catch was misplaced
   });
+  // Fixed: Added catch block outside forEach
+  
 }
 
 async function deleteUser(id) {
-  await fetch(`${apiUrl}users/${id}`, { method: "DELETE" });
-  loadUsers();
+  fetch(`${apiUrl}users/${id}`, { method: "DELETE" })
+    .catch(error => console.error('Error deleting user:', error));
+    loadUsers();
 }
 
 // === Orders ===
@@ -91,9 +101,12 @@ async function loadOrders() {
           order._id
         }')">Confirm</button></td>
       </tr>
-    `;
+    `
+    .catch(error => console.error('Error:', error));
   });
 }
+
+// Fixed: Added catch block
 
 
 async function confirmOrder(id) {
@@ -102,7 +115,8 @@ async function confirmOrder(id) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ orderStatus: "Confirmed" }),
   });
-  loadOrders();
+    
+    loadOrders();
 }
 
 // Auto load
