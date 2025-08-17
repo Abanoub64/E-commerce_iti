@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const userGreeting = document.getElementById("userGreeting");
   const adminBtn = document.getElementById("adminBtn");
   const logoutBtn = document.getElementById("logoutBtn");
+  const cartBtn = document.getElementById("cart");
 
   if (userId && userName) {
     userGreeting.textContent = `Hello, ${userName}!`;
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   logoutBtn.addEventListener("click", () => {
-    fetch("https://e-commerce-iti-wfr1.onrender.com/logout", {
+    fetch("https://api.escuelajs.co/api/v1/logout", {
       method: "GET",
       credentials: "include",
     })
@@ -31,8 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((err) => console.error("Logout error:", err));
   });
 
-  let cartBt = document.getElementById("cart");
-  cartBt.addEventListener("click", () => {
+  cartBtn.addEventListener("click", () => {
     window.location.href = "../cart.html";
   });
 
@@ -92,50 +92,55 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ----------- Fetch & Render Products -----------
-  fetch("https://e-commerce-iti-wfr1.onrender.com/products")
+  const API_URL = "https://api.escuelajs.co/api/v1/products";
+  
+  fetch(API_URL)
     .then((response) => response.json())
     .then((data) => {
       const productsSection = document.getElementById("productList");
       productsSection.innerHTML = "";
 
-      data.forEach((product) => {
+      // Filter out products with broken or generic image URLs
+      const validProducts = data.filter(product => {
+        const imageUrl = product.images?.[0] || "";
+        // Check for common broken placeholder URLs and general URL validity
+        return imageUrl && !imageUrl.includes("placeimg.com") && !imageUrl.includes("lorempixel.com") && (imageUrl.startsWith("http") || imageUrl.startsWith("https"));
+      });
+
+      if (!Array.isArray(validProducts) || validProducts.length === 0) {
+        productsSection.innerHTML =
+          '<div class="col-12 text-center"><p class="text-info">No products with valid images found.</p></div>';
+        return;
+      }
+
+      validProducts.forEach((product) => {
         const col = document.createElement("div");
         col.className = "col-md-4 d-flex mb-4";
 
         const card = document.createElement("div");
         card.className = "card shadow border p-3 d-flex flex-column w-100";
-        card.dataset.id = product._id;
+        card.dataset.id = product.id;
 
         // Title
         const title = document.createElement("p");
         title.className = "productTitle";
-        title.innerHTML = `<strong>${product.name}</strong>`;
+        title.innerHTML = `<strong>${product.title}</strong>`;
         card.appendChild(title);
 
         // Image
         const img = document.createElement("img");
-        console.log("Image URL for", product.name, ":", product.image); // Debug
-
-        img.src = product.image;
-        img.alt = product.name;
+        img.src = product.images[0];
+        img.alt = product.title;
         img.loading = "lazy";
         img.style.cssText =
           "width: 100%; height: 200px; object-fit: contain; border-radius: 8px;";
 
-        img.onerror = function () {
-          console.error("❌ Image failed to load:", this.src);
-          this.src =
-            "https://via.placeholder.com/300x200/cccccc/666666?text=No+Image";
-        };
-        card.appendChild(img);
-
-        // fallback placeholder
+        // Fallback placeholder
         img.onerror = function () {
           console.log("Image failed:", this.src);
           this.src =
-            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+CiAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4=";
+            "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRjBGMEYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==";
         };
-
         card.appendChild(img);
 
         // Price
@@ -152,12 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
           : "No description available";
         card.appendChild(desc);
 
-        // Stock
+        // Stock (the new API doesn't have a stock field)
         const stock = document.createElement("p");
         stock.className = "text-info";
-        stock.innerHTML = `<strong>Stock:</strong> ${
-          product.stock || 0
-        } available`;
+        stock.innerHTML = `<strong>Stock:</strong> Available`;
         card.appendChild(stock);
 
         // Button
@@ -165,9 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnWrapper.className = "mt-auto";
         const button = document.createElement("button");
         button.className = "btn btn-sm btn-primary productBtn w-100";
-        button.textContent =
-          product.stock === 0 ? "Out of Stock" : "Add To Cart";
-        if (product.stock === 0) button.disabled = true;
+        button.textContent = "Add To Cart";
         btnWrapper.appendChild(button);
         card.appendChild(btnWrapper);
 
@@ -187,6 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch((error) => {
       console.error("Error fetching products:", error);
       document.getElementById("productList").innerHTML =
-        '<div class="col-12 text-center"><p class="text-danger">Error loading products. Please refresh the page.</p></div>';
+        '<div class="col-12 text-center"><p class="text-danger">Error loading products. The server is not responding. Please try again later.</p></div>';
     });
 });
